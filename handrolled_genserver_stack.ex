@@ -1,4 +1,4 @@
-defmodule HandrolledGenServer do
+defmodule HandrolledGenServerStack do
   def start(initial_state) do
     spawn(fn -> loop(initial_state) end)
   end
@@ -31,5 +31,13 @@ defmodule HandrolledGenServer do
         send(caller_pid, {ref, reply})
         loop(new_state)
     end
+  end
+
+  defp handle_cast({:push, element}, state) do
+    [element | state]
+  end
+
+  defp handle_call(:pop, [element | rest]) do
+    {element, rest}
   end
 end
