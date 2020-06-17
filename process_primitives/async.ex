@@ -39,4 +39,33 @@ defmodule Async do
         :killed
     end
   end
+
+  def execute_async_with_monitor(fun) do
+    caller = self()
+    ref = make_ref()
+
+    {pid, monitor_ref} =
+      spawn_monitor(fn ->
+        result = fun.()
+        send(caller, {ref, result})
+      end)
+
+    {pid, ref, monitor_ref}
+  end
+
+  def await_or_kill_with_monitor({pid, ref, monitor_ref}, timeout) do
+    receive do
+      {^ref, result} ->
+        Process.demonitor(monitor_ref, [:flush])
+        {:ok, result}
+
+      {:DOWN, ^monitor_ref, _, _, reason} ->
+        {:error, reason}
+    after
+      timeout ->
+        # We have to wait for the :DOWN message too here...
+        Process.exit(pid, :kill)
+        :killed
+    end
+  end
 end

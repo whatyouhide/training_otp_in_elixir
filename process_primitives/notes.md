@@ -1,3 +1,5 @@
+# Process primitives
+
 ## Spawning
 
 ```elixir
@@ -69,4 +71,13 @@ iex> async_calculator = Async.execute_async(fn ->
 iex> Async.await_result(async_calculator, 5_000)
 
 iex> Async.await_result(async_calculator, 20_000)
+```
+
+## Async with crashing task (monitor)
+
+```elixir
+iex> async_calculator = Async.execute_async(fn ->
+...>   42 / 0
+...> end)
+iex> Async.await_result(async_calculator, 5_000)
 ```
