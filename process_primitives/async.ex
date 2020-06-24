@@ -20,7 +20,7 @@ defmodule Async do
   end
 
   # If we add :infinity as the default timeout, we don't need await_result/1 anymore.
-  def await_result(ref, timeout \\ :infinity) do
+  def await_result(ref, timeout) do
     receive do
       {^ref, result} -> {:ok, result}
     after
