@@ -1,6 +1,7 @@
 defmodule SharedStateTest do
   use ExUnit.Case
 
+  @tag :skip
   test "start/1 + get/1" do
     pid = SharedState.start(_initial_state = 1)
     assert is_pid(pid)
@@ -8,6 +9,7 @@ defmodule SharedStateTest do
     assert SharedState.get(pid) == 1
   end
 
+  @tag :skip
   test "start/1 + update/2 + get/1" do
     pid = SharedState.start(_initial_state = 1)
     assert is_pid(pid)
@@ -17,6 +19,7 @@ defmodule SharedStateTest do
     assert SharedState.get(pid) == 2
   end
 
+  @tag :skip
   test "update/2 executes the function in the state process" do
     test_pid = self()
     ref = make_ref()

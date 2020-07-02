@@ -1,6 +1,9 @@
 defmodule AsyncTest do
   use ExUnit.Case
 
+  @compile {:no_warn_undefined, Async}
+
+  @tag :skip
   test "execute_async/1 + await_result/1" do
     start_time = System.monotonic_time(:millisecond)
 
@@ -15,6 +18,7 @@ defmodule AsyncTest do
     assert System.monotonic_time(:millisecond) - start_time >= 500
   end
 
+  @tag :skip
   test "execute_async/1 + await_result/2 (with timeout)" do
     task =
       Async.execute_async(fn ->
@@ -25,6 +29,7 @@ defmodule AsyncTest do
     assert Async.await_result(task, 100) == :timeout
   end
 
+  @tag :skip
   test "execute_async/1 + await_or_kill/2" do
     task =
       Async.execute_async(fn ->
@@ -35,6 +40,7 @@ defmodule AsyncTest do
     assert Async.await_or_kill(task, 100) == :killed
   end
 
+  @tag :skip
   test "execute_async_with_monitor/1 + await_or_kill_with_monitor/2" do
     successful_task =
       Async.execute_async_with_monitor(fn ->

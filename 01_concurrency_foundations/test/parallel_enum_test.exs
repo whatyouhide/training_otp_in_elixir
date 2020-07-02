@@ -1,6 +1,7 @@
 defmodule ParallelEnumTest do
   use ExUnit.Case
 
+  @tag :skip
   test "each/2" do
     test_pid = self()
     ref = make_ref()
@@ -18,6 +19,7 @@ defmodule ParallelEnumTest do
     assert MapSet.size(pids) == 5
   end
 
+  @tag :skip
   test "map/2" do
     pids_and_items =
       ParallelEnum.map(1..5, fn item ->

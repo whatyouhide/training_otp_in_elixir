@@ -1,20 +1,11 @@
 defmodule ParallelEnum do
-  def each(enum, fun) do
-    Enum.each(enum, fn element ->
-      spawn(fn ->
-        fun.(element)
-      end)
-    end)
+  @compile {:no_warn_undefined, Async}
+
+  def each(_enum, _fun) do
+    raise "not implemented yet"
   end
 
-  # After having made Async stuff
-  def map(enum, fun) do
-    enum
-    |> Enum.map(fn element ->
-      Async.execute_async(fn -> fun.(element) end)
-    end)
-    |> Enum.map(fn async_process ->
-      Async.await_result(async_process)
-    end)
+  def map(_enum, _fun) do
+    raise "not implemented yet"
   end
 end
