@@ -1,6 +1,4 @@
-Code.require_file("redis_protocol.ex", __DIR__)
-
-defmodule RedisClient do
+defmodule RedisClientGenStatem do
   @behaviour :gen_statem
 
   require Logger
@@ -48,7 +46,7 @@ defmodule RedisClient do
   ## Connected state
 
   def connected({:call, from}, {:request, commands}, data) do
-    packed = RedisProtocol.pack(commands)
+    packed = RedisClient.Protocol.pack(commands)
     :ok = :gen_tcp.send(data.socket, packed)
 
     data = %{data | requests: :queue.in(from, data.requests)}
@@ -61,7 +59,7 @@ defmodule RedisClient do
     # getter = fn -> RedisClient.command(pid, ["GET", "mykey"]) end
     # [Task.async(getter), Task.async(getter)] |> Enum.map(&Task.await/1)
 
-    {:ok, response, ""} = RedisProtocol.parse(payload)
+    {:ok, response, ""} = RedisClient.Protocol.parse(payload)
 
     {{:value, from}, queue} = :queue.out(data.requests)
 
