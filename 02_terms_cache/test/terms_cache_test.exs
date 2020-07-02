@@ -1,6 +1,7 @@
 defmodule TermsCacheTest do
   use ExUnit.Case
 
+  @tag :skip
   test "put + get" do
     {:ok, _pid} = TermsCache.start_link(_opts = [])
 
@@ -10,6 +11,7 @@ defmodule TermsCacheTest do
     assert TermsCache.get(:jose) == nil
   end
 
+  @tag :skip
   test "put with TTL" do
     {:ok, _pid} = TermsCache.start_link(_opts = [])
     key = :erlang.md5("https://elixir-lang.org")

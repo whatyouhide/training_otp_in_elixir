@@ -1,6 +1,7 @@
 defmodule ETSTermsCacheTest do
   use ExUnit.Case
 
+  @tag :skip
   test "put + get" do
     {:ok, _pid} = ETSTermsCache.start_link(_opts = [])
 
@@ -10,6 +11,7 @@ defmodule ETSTermsCacheTest do
     assert ETSTermsCache.get(:jose) == nil
   end
 
+  @tag :skip
   test "put with TTL" do
     {:ok, _pid} = ETSTermsCache.start_link(_opts = [])
     key = :erlang.md5("https://elixir-lang.org")
