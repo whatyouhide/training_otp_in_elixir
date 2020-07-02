@@ -5,22 +5,23 @@ defmodule Async do
     caller = self()
     ref = make_ref()
 
-    spawn(fn ->
-      result = fun.()
-      send(caller, {ref, result})
-    end)
+    pid =
+      spawn(fn ->
+        result = fun.()
+        send(caller, {ref, result})
+      end)
 
-    ref
+    {pid, ref}
   end
 
-  def await_result(ref) do
+  def await_result({_pid, ref}) do
     receive do
       {^ref, result} -> result
     end
   end
 
   # If we add :infinity as the default timeout, we don't need await_result/1 anymore.
-  def await_result(ref, timeout) do
+  def await_result({_pid, ref}, timeout) do
     receive do
       {^ref, result} -> {:ok, result}
     after
