@@ -1,6 +1,4 @@
-Code.require_file("redis_protocol.ex", __DIR__)
-
-defmodule RedisClient do
+defmodule RedisClientBlocking do
   use GenServer
 
   defstruct [:socket]
@@ -24,11 +22,11 @@ defmodule RedisClient do
 
   @impl true
   def handle_call({:request, commands}, _from, state) do
-    packed = RedisProtocol.pack(commands)
+    packed = RedisClient.Protocol.pack(commands)
     :ok = :gen_tcp.send(state.socket, packed)
 
     {:ok, data} = :gen_tcp.recv(state.socket, 0)
-    {:ok, response, ""} = RedisProtocol.parse(data)
+    {:ok, response, ""} = RedisClient.Protocol.parse(data)
 
     {:reply, response, state}
   end

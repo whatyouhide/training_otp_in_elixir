@@ -1,9 +1,7 @@
-Code.require_file("redis_client_nonblocking.ex", __DIR__)
-
-ExUnit.start()
-
 defmodule RedisClientTest do
   use ExUnit.Case
+
+  alias RedisClientNonblocking, as: RedisClient
 
   test "start connection and PING" do
     assert {:ok, conn} = RedisClient.start_link(host: "localhost", port: 6379)

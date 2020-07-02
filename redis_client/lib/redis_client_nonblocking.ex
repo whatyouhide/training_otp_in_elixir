@@ -1,6 +1,4 @@
-Code.require_file("redis_protocol.ex", __DIR__)
-
-defmodule RedisClient do
+defmodule RedisClientNonblocking do
   use GenServer
 
   defstruct [:socket, :requests]
@@ -24,7 +22,7 @@ defmodule RedisClient do
 
   @impl true
   def handle_call({:request, commands}, from, state) do
-    packed = RedisProtocol.pack(commands)
+    packed = RedisClient.Protocol.pack(commands)
     :ok = :gen_tcp.send(state.socket, packed)
 
     state = %{state | requests: :queue.in(from, state.requests)}
@@ -38,7 +36,7 @@ defmodule RedisClient do
     # getter = fn -> RedisClient.command(pid, ["GET", "mykey"]) end
     # [Task.async(getter), Task.async(getter)] |> Enum.map(&Task.await/1)
 
-    {:ok, response, ""} = RedisProtocol.parse(data)
+    {:ok, response, ""} = RedisClient.Protocol.parse(data)
 
     {{:value, from}, queue} = :queue.out(state.requests)
 

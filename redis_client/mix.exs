@@ -1,9 +1,9 @@
-defmodule TermsCache.MixProject do
+defmodule RedisClient.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :terms_cache,
+      app: :redis_client,
       version: "0.1.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,

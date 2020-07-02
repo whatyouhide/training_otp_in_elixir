@@ -5,7 +5,7 @@ defmodule ConcurrencyFoundations.MixProject do
     [
       app: :concurrency_foundations,
       version: "0.1.0",
-      elixir: "~> 1.11-dev",
+      elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]

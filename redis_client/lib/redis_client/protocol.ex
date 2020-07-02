@@ -1,4 +1,4 @@
-defmodule RedisProtocol do
+defmodule RedisClient.Protocol do
   @moduledoc """
   This module provides functions to work with the [Redis binary
   protocol](http://redis.io/topics/protocol).
