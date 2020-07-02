@@ -1,7 +1,3 @@
-Code.require_file("parallel_enum.ex", __DIR__)
-
-ExUnit.start()
-
 defmodule ParallelEnumTest do
   use ExUnit.Case
 
@@ -23,9 +19,6 @@ defmodule ParallelEnumTest do
   end
 
   test "map/2" do
-    test_pid = self()
-    ref = make_ref()
-
     pids_and_items =
       ParallelEnum.map(1..5, fn item ->
         {self(), item}

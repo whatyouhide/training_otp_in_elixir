@@ -1,5 +1,3 @@
-Code.require_file("async.ex", __DIR__)
-
 defmodule ParallelEnum do
   def each(enum, fun) do
     Enum.each(enum, fn element ->
