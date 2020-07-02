@@ -1,4 +1,6 @@
 defmodule ParallelEnum do
+  @compile {:no_warn_undefined, Async}
+
   def each(enum, fun) do
     Enum.each(enum, fn element ->
       spawn(fn ->

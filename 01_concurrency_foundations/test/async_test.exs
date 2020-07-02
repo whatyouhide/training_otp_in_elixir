@@ -1,6 +1,8 @@
 defmodule AsyncTest do
   use ExUnit.Case
 
+  @compile {:no_warn_undefined, Async}
+
   test "execute_async/1 + await_result/1" do
     start_time = System.monotonic_time(:millisecond)
 
