@@ -1,8 +1,6 @@
 defmodule TermsCacheTest do
   use ExUnit.Case
 
-  alias ETSTermsCache, as: TermsCache
-
   test "put + get" do
     {:ok, _pid} = TermsCache.start_link(_opts = [])
 
