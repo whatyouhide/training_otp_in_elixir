@@ -34,6 +34,15 @@ During the training, we'll explore the following projects:
     implemented as GenServers: the last step here is rewriting them as state
     machines by using `gen_statem`.
 
+Then, there is some content that fits outside of our schedule and is provided as
+additional resources to attendees:
+
+  * `handrolled_genserver` - contains a hand-rolled and
+    significantly-but-not-unbelievably simplified version of how the `GenServer`
+    behaviour is implemented under the hood (in Erlang/OTP). Also contains a
+    "stack" process (that you can push to and pop from) implemented on top of
+    the hand-rolled GenServer-like behaviour.
+
 ## Branches
 
 The `main` branch contains the code we'll work on. It's mostly skeletons of
