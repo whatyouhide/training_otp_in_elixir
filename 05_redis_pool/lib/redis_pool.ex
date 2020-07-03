@@ -3,18 +3,20 @@ defmodule RedisPool do
 
   @spec start_link(keyword()) :: {:ok, tuple()}
   def start_link(opts) do
-    name = Keyword.fetch!(opts, :name)
+    pool_name = Keyword.fetch!(opts, :name)
     connections = Keyword.get(opts, :connections, 5)
     connection_options = Keyword.get(opts, :connection_options, [])
 
-    Supervisor.start_link(__MODULE__, {name, connections, connection_options}, name: name)
+    Supervisor.start_link(__MODULE__, {pool_name, connections, connection_options},
+      name: pool_name
+    )
   end
 
-  @spec connection(atom()) :: atom()
-  def connection(name) do
-    connections = :persistent_term.get({name, :connections})
+  @spec command(atom(), Redix.command()) :: {:ok, term()} | {:error, term()}
+  def command(pool_name, command) when is_list(command) do
+    connections = :persistent_term.get({pool_name, :connections})
     random_index = Enum.random(1..connections)
-    connection_name(name, random_index)
+    Redix.command(connection_name(pool_name, random_index), command)
   end
 
   @impl true
