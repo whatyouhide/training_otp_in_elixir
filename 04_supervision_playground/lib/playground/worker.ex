@@ -11,7 +11,13 @@ defmodule Playground.Worker do
 
   @impl true
   def init(opts) do
-    _ = Logger.info("Starting worker: #{inspect(opts[:name])}")
-    {:ok, :no_state}
+    _ = Logger.info("Starting worker #{inspect(opts[:name])}")
+    Process.flag(:trap_exit, true)
+    {:ok, opts[:name]}
+  end
+
+  @impl true
+  def terminate(reason, name) do
+    _ = Logger.info("Terminating worker #{inspect(name)} with reason: #{inspect(reason)}")
   end
 end
