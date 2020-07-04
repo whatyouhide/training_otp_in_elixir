@@ -5,10 +5,12 @@ defmodule RedisClientGenStatem do
 
   defstruct [:host, :port, :socket, :requests]
 
+  @spec start_link(keyword()) :: :gen_statem.start_ret()
   def start_link(opts) when is_list(opts) do
     :gen_statem.start_link(__MODULE__, opts, [])
   end
 
+  @spec command(pid(), [String.t()]) :: {:ok, term()} | {:error, term()}
   def command(pid, commands) when is_list(commands) do
     GenServer.call(pid, {:request, commands})
   end
