@@ -1,6 +1,6 @@
 # OTP in Elixir
 
-Upcoming training.
+> Material for a training done at [Elixir Club Kyiv](https://www.meetup.com/Elixir-Club/) in ~2020. 👩‍🏫
 
 ## Requirements
 
